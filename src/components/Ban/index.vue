@@ -91,7 +91,7 @@
                                     {{ v.slug_ban }}
                                 </td>
                                 <td class="text-center align-middle text-nowrap">
-                                    {{ v.id_khu_vuc }}
+                                    {{ v.ten_khu }}
                                 </td>
                                 <td class="text-center align-middle text-nowrap">
                                     <button v-if="v.tinh_trang == 1" class="btn btn-success" style="width: 100px;">Hiển

@@ -34,7 +34,7 @@
                             <td class="align-middle text-nowrap">{{ v.email }}</td>
                             <td class="align-middle text-nowrap">{{ v.so_dien_thoai }}</td>
                             <td class="align-middle text-nowrap">{{ v.dia_chi }}</td>
-                            <td class="align-middle text-nowrap">{{ v.id_chuc_vu }}</td>
+                            <td class="align-middle text-nowrap">{{ v.ten_chuc_vu }}</td>
                             <td class="align-middle text-nowrap text-center">
                                 <button v-if="v.tinh_trang == 1" class="btn btn-success">Hoạt Động</button>
                                 <button v-else class="btn btn-warning">Tạm Dừng</button>
