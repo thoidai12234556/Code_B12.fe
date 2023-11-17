@@ -13,6 +13,18 @@ const routes = [
         path : '/admin/nhan-vien',
         component: ()=>import('../components/NhanVien/index.vue')
     },
+    {
+        path : '/admin/ban',
+        component: ()=>import('../components/Ban/index.vue')
+    },
+    {
+        path : '/admin/khu-vuc',
+        component: ()=>import('../components/KhuVuc/index.vue')
+    },
+    {
+        path : '/admin/nguyen-lieu',
+        component: ()=>import('../components/NguyenLieu/index.vue')
+    },
 ]
 
 const router = createRouter({
