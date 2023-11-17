@@ -61,6 +61,36 @@
                     </a>
                 </router-link>
             </li>
+            <li class="nav-item">
+                <router-link to="/admin/ban">
+                    <a href="/admin/ban" class="nav-link">
+                        <div class="parent-icon">
+                            <i class="fa-solid fa-inbox"></i>
+                        </div>
+                        <div class="menu-title">Bàn</div>
+                    </a>
+                </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/admin/khu-vuc">
+                    <a href="/admin/khu-vuc" class="nav-link">
+                        <div class="parent-icon">
+                            <i class="fa-solid fa-map"></i>
+                        </div>
+                        <div class="menu-title">Khu Vực</div>
+                    </a>
+                </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/admin/nguyen-lieu">
+                    <a href="/admin/nguyen-lieu" class="nav-link">
+                        <div class="parent-icon">
+                            <i class="fa-solid fa-cubes-stacked"></i>
+                        </div>
+                        <div class="menu-title">Nguyên Liệu</div>
+                    </a>
+                </router-link>
+            </li>
         </ul>
     </nav>
 </div>
