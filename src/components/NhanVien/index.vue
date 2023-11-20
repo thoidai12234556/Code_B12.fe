@@ -74,29 +74,35 @@
                     <div class="row">
                         <div class="col-6">
                             <label class="form-label">Họ Và Tên</label>
-                            <input type="text" class="form-control">
+                            <input v-model="create_nhan_vien.ho_va_ten" type="text" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label class="form-label">Email</label>
-                            <input type="text" class="form-control">
+                            <input v-model="create_nhan_vien.email" type="email" class="form-control">
+                        </div>
+                        <div class="col-6 mt-2">
+                            <label class="form-label">Mật Khẩu</label>
+                            <input v-model="create_nhan_vien.password" type="text" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label class="form-label">Số điện thoại</label>
-                            <input type="text" class="form-control">
+                            <input v-model="create_nhan_vien.so_dien_thoai" type="text" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label class="form-label">Địa chỉ</label>
-                            <input type="text" class="form-control">
+                            <input v-model="create_nhan_vien.dia_chi" type="text" class="form-control">
                         </div>
                         <div class="col-6 mt-2">
                             <label class="form-label">Chức Vụ</label>
-                            <select class="form-select">
-                                <option value="">Quản Lý</option>
+                            <select v-model="create_nhan_vien.id_chuc_vu" class="form-select">
+                                <template v-for="(v, k) in list_chuc_vu">
+                                    <option v-bind:value="v.id">{{ v.ten_chuc_vu }}</option>
+                                </template>
                             </select>
                         </div>
                         <div class="col-6 mt-2">
                             <label class="form-label">Tình trạng</label>
-                            <select class="form-select">
+                            <select v-model="create_nhan_vien.tinh_trang" class="form-select">
                                 <option value="0">Tạm tắt</option>
                                 <option value="1">Hiển thị</option>
                             </select>
@@ -106,8 +112,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
                         data-bs-dismiss="modal">Close</button>
-                    <button data-bs-dismiss="modal" type="button" class="btn btn-primary">Xác
-                        nhận</button>
+                    <button @:click="createNhanVien()" data-bs-dismiss="modal" type="button" class="btn btn-primary">Xác nhận</button>
                 </div>
             </div>
         </div>
@@ -207,11 +212,14 @@ export default {
     data() {
         return {
             list_nhan_vien   :   [],
-            key_search       :   {}
+            key_search       :   {},
+            list_chuc_vu     :   [],
+            create_nhan_vien :   {},
         }
     },
     mounted() {
         this.loadDataNhanVien();
+        this.loadDataChucVu();
     },
     methods: {
         loadDataNhanVien()   {
@@ -221,14 +229,36 @@ export default {
                     this.list_nhan_vien = res.data.nhan_vien;
                 });
         },
-        
+
+        loadDataChucVu()   {
+            axios
+                .get('http://127.0.0.1:8000/api/admin/chuc-vu/lay-du-lieu')
+                .then((res) =>  {
+                    this.list_chuc_vu = res.data.chuc_vu;
+                });
+        },
+
         searchNhanVien(){
             axios
                 .post('http://127.0.0.1:8000/api/admin/nhan-vien/tim-nhan-vien', this.key_search)
                 .then((res) =>  {
                     this.list_nhan_vien = res.data.nhan_vien;
                 });
-        }
+        },
+
+        createNhanVien() {
+            console.log(this.create_nhan_vien);
+            axios
+                .post('http://127.0.0.1:8000/api/admin/nhan-vien/tao-nhan-vien', this.create_nhan_vien)
+                .then((res) =>  {
+                    if(res.data.status == 1) {
+                        alert(res.data.message);
+                        this.loadDataNhanVien();
+                        this.loadDataChucVu(); // dư thừa, không nên
+                    }
+                });
+        },
+
     }
 }
 </script>
