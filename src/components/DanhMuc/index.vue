@@ -31,6 +31,16 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th colspan="100%">
+                                    <div class="input-group mb-3">
+                                        <input v-on:keyup.enter="searchDanhMuc()" v-model="key_search.abc" type="text" class="form-control" placeholder="Nhập thông tin cần tìm">
+                                        <button class="btn btn-primary" v-on:click="searchDanhMuc()">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
                                 <th class="text-center align-middle text-nowrap">
                                     #
                                 </th>
@@ -159,6 +169,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
+            key_search      :   {},
             list_danh_muc   :   [],
         }
     },
@@ -169,6 +180,14 @@ export default {
         loadDataDanhMuc()   {
             axios
                 .get('http://127.0.0.1:8000/api/admin/danh-muc/lay-du-lieu')
+                .then((res) =>  {
+                    this.list_danh_muc = res.data.danh_muc;
+                });
+        },
+
+        searchDanhMuc(){
+            axios
+                .post('http://127.0.0.1:8000/api/admin/danh-muc/tim-danh-muc', this.key_search)
                 .then((res) =>  {
                     this.list_danh_muc = res.data.danh_muc;
                 });

@@ -67,6 +67,16 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th colspan="100%">
+                                    <div class="input-group mb-3">
+                                        <input v-on:keyup.enter="searchNguyenLieu()" v-model="key_search.abc" type="text" class="form-control" placeholder="Nhập thông tin cần tìm">
+                                        <button class="btn btn-primary" v-on:click="searchNguyenLieu()">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
                                 <th class="text-center align-middle text-nowrap">
                                     #
                                 </th>
@@ -223,7 +233,8 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            list_nguyen_lieu: [],
+            list_nguyen_lieu    : [],
+            key_search          : {}
         }
     },
     mounted() {
@@ -234,6 +245,14 @@ export default {
             axios
                 .get('http://127.0.0.1:8000/api/admin/nguyen-lieu/lay-du-lieu')
                 .then((res) => {
+                    this.list_nguyen_lieu = res.data.nguyen_lieu;
+                });
+        },
+
+        searchNguyenLieu(){
+            axios
+                .post('http://127.0.0.1:8000/api/admin/nguyen-lieu/tim-nguyen-lieu', this.key_search)
+                .then((res) =>  {
                     this.list_nguyen_lieu = res.data.nguyen_lieu;
                 });
         }
