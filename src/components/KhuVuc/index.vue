@@ -43,6 +43,16 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th colspan="100%">
+                                        <div class="input-group mb-3">
+                                            <input v-on:keyup.enter="searchKhuVuc()" v-model="key_search.abc" type="text" class="form-control" placeholder="Nhập thông tin cần tìm">
+                                            <button class="btn btn-primary" v-on:click="searchKhuVuc()">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                            </button>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
                                     <th class="text-center align-middle text-nowrap">
                                         #
                                     </th>
@@ -169,7 +179,8 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            list_khu_vuc: [],
+            list_khu_vuc   : [],
+            key_search     : {}
         }
     },
     mounted() {
@@ -180,6 +191,14 @@ export default {
             axios
                 .get('http://127.0.0.1:8000/api/admin/khu-vuc/lay-du-lieu')
                 .then((res) => {
+                    this.list_khu_vuc = res.data.khu_vuc;
+                });
+        },
+
+        searchKhuVuc(){
+            axios
+                .post('http://127.0.0.1:8000/api/admin/khu-vuc/tim-khu-vuc', this.key_search)
+                .then((res) =>  {
                     this.list_khu_vuc = res.data.khu_vuc;
                 });
         }
