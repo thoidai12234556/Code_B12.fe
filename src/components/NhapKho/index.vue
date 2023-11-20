@@ -116,7 +116,7 @@ export default {
         },
         searchNguyenLieu() {
             axios
-                .get('http://127.0.0.1:8000/api/admin/nguyen-lieu/tim-nguyen-lieu')
+                .post('http://127.0.0.1:8000/api/admin/nguyen-lieu/tim-nguyen-lieu', this.key_search)
                 .then((res) =>  {
                     this.list_nguyen_lieu = res.data.nguyen_lieu;
                 });
