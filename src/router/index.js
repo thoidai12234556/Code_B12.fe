@@ -25,6 +25,10 @@ const routes = [
         path : '/admin/nguyen-lieu',
         component: ()=>import('../components/NguyenLieu/index.vue')
     },
+    {
+        path : '/admin/nhap-kho',
+        component: ()=>import('../components/NhapKho/index.vue')
+    },
 ]
 
 const router = createRouter({
