@@ -18,31 +18,31 @@
                         <div class="row">
                             <div class="col-6">
                                 <label class="form-label">Tên Nguyên Liệu</label>
-                                <input type="text" class="form-control" placeholder="Nhập tên nguyên liệu">
+                                <input v-model="create_nguyen_lieu.ten_nguyen_lieu" type="text" class="form-control" placeholder="Nhập tên nguyên liệu">
                             </div>
                             <div class="col-6">
                                 <label class="form-label">Slug Nguyên Liệu</label>
-                                <input type="text" class="form-control" placeholder="Nhập slug nguyên liệu">
+                                <input v-model="create_nguyen_lieu.slug_nguyen_lieu" type="text" class="form-control" placeholder="Nhập slug nguyên liệu">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <label class="form-label mt-3">Giá</label>
-                                <input type="number" class="form-control" placeholder="0">
+                                <input v-model="create_nguyen_lieu.so_luong" type="number" class="form-control" placeholder="0">
                             </div>
                             <div class="col-6">
                                 <label class="form-label mt-3">Số Lượng</label>
-                                <input type="number" class="form-control" placeholder="0">
+                                <input v-model="create_nguyen_lieu.gia" type="number" class="form-control" placeholder="0">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <label class="form-label mt-3">Đơn Vị Tính</label>
-                                <input type="text" class="form-control" placeholder="Đơn vị tính">
+                                <input v-model="create_nguyen_lieu.dvt" type="text" class="form-control" placeholder="Đơn vị tính">
                             </div>
                             <div class="col-6">
                                 <label class="form-label mt-3">Tình Trạng</label>
-                                <select class="form-control">
+                                <select v-model="create_nguyen_lieu.tinh_trang" class="form-control">
                                     <option value="0">Yes</option>
                                     <option value="1">No</option>
                                 </select>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
-                    <button type="button" class="btn btn-primary">Thêm Mới</button>
+                    <button @:click="createNguyenLieu()" type="button" class="btn btn-primary">Thêm Mới</button>
                 </div>
             </div>
         </div>
@@ -234,7 +234,8 @@ export default {
     data() {
         return {
             list_nguyen_lieu    : [],
-            key_search          : {}
+            key_search          : {},
+            create_nguyen_lieu  : {},
         }
     },
     mounted() {
@@ -255,7 +256,19 @@ export default {
                 .then((res) =>  {
                     this.list_nguyen_lieu = res.data.nguyen_lieu;
                 });
-        }
+        },
+
+        createNguyenLieu() {
+            console.log(this.create_nguyen_lieu);
+            axios
+                .post('http://127.0.0.1:8000/api/admin/nguyen-lieu/tao-nguyen-lieu', this.create_nguyen_lieu)
+                .then((res) =>  {
+                    if(res.data.status == true) {
+                        alert(res.data.message);
+                        this.loadDataNguyenLieu();
+                    }
+                });
+        },
     }
 }
 </script>
