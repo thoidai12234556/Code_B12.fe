@@ -7,17 +7,21 @@
             </div>
             <div class="card-body">
                 <label class="form-label">Tên Danh Mục</label>
-                <input type="text" class="form-control" placeholder="Nhập tên danh mục">
+                <input v-model="create_danh_muc.ten_danh_muc" type="text" class="form-control" placeholder="Nhập tên danh mục">
                 <label class="form-label mt-3">Slug Danh Mục</label>
-                <input type="text" class="form-control" placeholder="Nhập slug danh mục">
+                <input v-model="create_danh_muc.slug_danh_muc" type="text" class="form-control" placeholder="Nhập slug danh mục">
+                <label class="form-label mt-3">Danh Mục Cha</label>
+                <select v-model="create_danh_muc.id_danh_muc_cha" class="form-control">
+                    <option value="0">Root</option>
+                </select>
                 <label class="form-label mt-3">Tình Trạng</label>
-                <select class="form-control">
+                <select v-model="create_danh_muc.tinh_trang" class="form-control">
                     <option value="0">Yes</option>
                     <option value="1">No</option>
                 </select>
             </div>
             <div class="card-footer text-end">
-                <button class="btn btn-primary" >Thêm mới</button>
+                <button @:click="createDanhMuc()" class="btn btn-primary" >Thêm mới</button>
             </div>
         </div>
     </div>
@@ -170,6 +174,7 @@ export default {
     data() {
         return {
             key_search      :   {},
+            create_danh_muc :   {},
             list_danh_muc   :   [],
         }
     },
@@ -191,7 +196,19 @@ export default {
                 .then((res) =>  {
                     this.list_danh_muc = res.data.danh_muc;
                 });
-        }
+        },
+
+        createDanhMuc() {
+            console.log(this.create_danh_muc);
+            axios
+                .post('http://127.0.0.1:8000/api/admin/danh-muc/tao-danh-muc', this.create_danh_muc)
+                .then((res) =>  {
+                    if(res.data.status == true) {
+                        alert(res.data.message);
+                        this.loadDataDanhMuc();
+                    }
+                });
+        },
     }
 }
 </script>

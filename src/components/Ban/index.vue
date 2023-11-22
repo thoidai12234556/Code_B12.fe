@@ -18,23 +18,25 @@
                         <div class="row">
                             <div class="col-6">
                                 <label class="form-label">Tên Bàn</label>
-                                <input type="text" class="form-control" placeholder="Nhập tên bàn">
+                                <input v-model="create_ban.ten_ban" type="text" class="form-control" placeholder="Nhập tên bàn">
                             </div>
                             <div class="col-6">
                                 <label class="form-label">Slug Bàn</label>
-                                <input type="text" class="form-control" placeholder="Nhập slug bàn">
+                                <input v-model="create_ban.slug_ban" type="text" class="form-control" placeholder="Nhập slug bàn">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                 <label class="form-label mt-3">Khu Vực</label>
-                                <select class="form-select">
-                                    <option value="" selected>--Chọn khu vực--</option>
+                                <select v-model="create_ban.id_khu_vuc" class="form-select">
+                                    <template v-for="(v, k) in list_khu_vuc">
+                                        <option v-bind:value="v.id">{{ v.ten_khu }}</option>
+                                    </template>
                                 </select>
                             </div>
                             <div class="col-6">
                                 <label class="form-label mt-3">Tình Trạng</label>
-                                <select class="form-control">
+                                <select v-model="create_ban.tinh_trang" class="form-control">
                                     <option value="0">Mở</option>
                                     <option value="1">Đóng</option>
                                 </select>
@@ -44,7 +46,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
-                    <button type="button" class="btn btn-primary">Thêm Mới</button>
+                    <button @:click="createBan()" type="button" class="btn btn-primary">Thêm Mới</button>
                 </div>
             </div>
         </div>
@@ -205,11 +207,14 @@ export default {
     data() {
         return {
             list_ban        :   [],
-            key_search      :   {}
+            list_khu_vuc    :   [],
+            key_search      :   {},
+            create_ban      :   {},
         }
     },
     mounted() {
         this.loadDataBan();
+        this.loadDataKhuVuc();
     },
     methods: {
         loadDataBan() {
@@ -220,13 +225,34 @@ export default {
                 });
         },
 
+        loadDataKhuVuc() {
+            axios
+                .get('http://127.0.0.1:8000/api/admin/khu-vuc/lay-du-lieu')
+                .then((res) => {
+                    this.list_khu_vuc = res.data.khu_vuc;
+                });
+        },
+
         searchBan(){
             axios
                 .post('http://127.0.0.1:8000/api/admin/ban/tim-ban', this.key_search)
                 .then((res) =>  {
                     this.list_ban = res.data.ban;
                 });
-        }
+        },
+
+        createBan() {
+            console.log(this.create_ban);
+            axios
+                .post('http://127.0.0.1:8000/api/admin/ban/tao-ban', this.create_ban)
+                .then((res) =>  {
+                    if(res.data.status == true) {
+                        alert(res.data.message);
+                        this.loadDataBan();
+                        this.loadDataKhuVuc();
+                    }
+                });
+        },
     }
 }
 </script>

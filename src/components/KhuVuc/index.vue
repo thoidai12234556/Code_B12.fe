@@ -9,19 +9,19 @@
                     <div class="row">
                         <div class="col-12">
                             <label for="">Tên Khu Vực</label>
-                            <input type="text" class="form-control mt-2">
+                            <input v-model="create_khu_vuc.ten_khu" type="text" class="form-control mt-2">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-12">
                             <label for="">Slug Khu Vực</label>
-                            <input type="text" class="form-control mt-2">
+                            <input v-model="create_khu_vuc.slug_khu" type="text" class="form-control mt-2">
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-12">
                             <label for="">Tình Trạng</label>
-                            <select name="" id="" class="form-control mt-2">
+                            <select v-model="create_khu_vuc.tinh_trang" name="" id="" class="form-control mt-2">
                                 <option value="1">Hiển Thị</option>
                                 <option value="0">Tạm Tắt</option>
                             </select>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-end">
-                    <button class="btn btn-primary">Thêm Mới</button>
+                    <button @:click="createKhuVuc()" class="btn btn-primary">Thêm Mới</button>
                 </div>
             </div>
         </div>
@@ -180,7 +180,8 @@ export default {
     data() {
         return {
             list_khu_vuc   : [],
-            key_search     : {}
+            key_search     : {},
+            create_khu_vuc : {},
         }
     },
     mounted() {
@@ -201,7 +202,19 @@ export default {
                 .then((res) =>  {
                     this.list_khu_vuc = res.data.khu_vuc;
                 });
-        }
+        },
+
+        createKhuVuc() {
+            console.log(this.create_khu_vuc);
+            axios
+                .post('http://127.0.0.1:8000/api/admin/khu-vuc/tao-khu-vuc', this.create_khu_vuc)
+                .then((res) =>  {
+                    if(res.data.status == true) {
+                        alert(res.data.message);
+                        this.loadDataKhuVuc();
+                    }
+                });
+        },
     }
 }
 </script>

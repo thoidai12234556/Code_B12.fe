@@ -7,9 +7,9 @@
             </div>
             <div class="card-body">
                 <label class="mb-1 mt-1">Tên Chức Vụ</label>
-                <input class="form-control" type="text">
+                <input v-model="create_chuc_vu.ten_chuc_vu" class="form-control" type="text">
                 <label class="mb-1 mt-1">Tình Trạng</label>
-                <select class="form-control">
+                <select v-model="create_chuc_vu.tinh_trang" class="form-control">
                     <option value="1">
                         Hoạt Động
                     </option>
@@ -18,7 +18,7 @@
                     </option>
                 </select>
             </div>
-            <div class="card-footer text-end">
+            <div @:click="createChucVu()" class="card-footer text-end">
                 <button class="btn btn-primary">Thêm Mới</button>
             </div>
         </div>
@@ -142,7 +142,8 @@ export default {
     data() {
         return {
             list_chuc_vu   : [],
-            key_search     : {}
+            key_search     : {},
+            create_chuc_vu : {},
         }
     },
     mounted() {
@@ -163,7 +164,19 @@ export default {
                 .then((res) =>  {
                     this.list_chuc_vu = res.data.chuc_vu;
                 });
-        }
+        },
+
+        createChucVu() {
+            console.log(this.create_chuc_vu);
+            axios
+                .post('http://127.0.0.1:8000/api/admin/chuc-vu/tao-chuc-vu', this.create_chuc_vu)
+                .then((res) =>  {
+                    if(res.data.status == true) {
+                        alert(res.data.message);
+                        this.loadDataChucVu();
+                    }
+                });
+        },
     }
 }
 </script>

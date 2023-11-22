@@ -66,33 +66,33 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm mới</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm Mới</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Họ Và Tên</label>
                             <input v-model="create_nhan_vien.ho_va_ten" type="text" class="form-control">
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Email</label>
                             <input v-model="create_nhan_vien.email" type="email" class="form-control">
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Mật Khẩu</label>
                             <input v-model="create_nhan_vien.password" type="text" class="form-control">
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Số điện thoại</label>
                             <input v-model="create_nhan_vien.so_dien_thoai" type="text" class="form-control">
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Địa chỉ</label>
                             <input v-model="create_nhan_vien.dia_chi" type="text" class="form-control">
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Chức Vụ</label>
                             <select v-model="create_nhan_vien.id_chuc_vu" class="form-select">
                                 <template v-for="(v, k) in list_chuc_vu">
@@ -100,7 +100,7 @@
                                 </template>
                             </select>
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Tình trạng</label>
                             <select v-model="create_nhan_vien.tinh_trang" class="form-select">
                                 <option value="0">Tạm tắt</option>
@@ -128,29 +128,29 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Họ Và Tên</label>
                             <input type="text" class="form-control">
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Email</label>
                             <input type="text" class="form-control">
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Số điện thoại</label>
                             <input type="text" class="form-control">
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Địa chỉ</label>
                             <input type="text" class="form-control">
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Chức Vụ</label>
                             <select class="form-select">
                                 <option value="">Quản Lý</option>
                             </select>
                         </div>
-                        <div class="col-6 mt-2">
+                        <div class="col-6 mb-2">
                             <label class="form-label">Tình trạng</label>
                             <select class="form-select">
                                 <option value="0">Tạm tắt</option>
@@ -251,7 +251,7 @@ export default {
             axios
                 .post('http://127.0.0.1:8000/api/admin/nhan-vien/tao-nhan-vien', this.create_nhan_vien)
                 .then((res) =>  {
-                    if(res.data.status == 1) {
+                    if(res.data.status == true) {
                         alert(res.data.message);
                         this.loadDataNhanVien();
                         this.loadDataChucVu(); // dư thừa, không nên
